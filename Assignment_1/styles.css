@@ -1,0 +1,38 @@
+
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#nav{
+    width: 100%;
+    height: 60px;
+    justify-content: space-between;
+   
+}
+
+/* clour set up */
+
+
+
+.preje_c1{
+    background-color:#832fd6;
+   
+}
+.preje_c2{
+    background-color:#14e0da;
+   
+}
+.preje_c3{
+    background-color:#c214e0;
+   
+}
+
+
