@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+   
+    # 'accounts_manager.apps.AccountsManagerConfig',  # Update the app's reference
 ]
 AUTH_USER_MODEL = 'accounts_manager.CustomUser'
 MIDDLEWARE = [
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'jpgdj1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+          'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,6 +152,14 @@ REST_FRAMEWORK = {
    
 }
 
+
+# .......................X.........................
+# send email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'ashikaslam1111@gmail.com'  # Replace 'your_gmail_address' with your actual Gmail address
+EMAIL_HOST_PASSWORD = 'fpvs fsox sadc maoc'  # Replace with your generated app password
+EMAIL_PORT = 587
 
 ######################### jwt
 

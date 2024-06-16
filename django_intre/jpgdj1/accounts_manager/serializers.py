@@ -6,7 +6,7 @@
 
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-
+from rest_framework.exceptions import ValidationError  # Correct import
 User = get_user_model()
 
 # register..................................
@@ -35,3 +35,30 @@ from rest_framework import serializers
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True, style={'input_type': 'password'})
+
+
+
+# passwrod change with current password
+
+class PasswordChangeSerializer(serializers.Serializer):
+    current_password = serializers.CharField(required=True)
+    new_password1 = serializers.CharField(required=True)
+    new_password2 = serializers.CharField(required=True)
+    
+    
+    
+    
+# now this the code if someone forget his/her passoword
+    
+from rest_framework import serializers
+
+class ResetPasswordRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    
+
+class ResetPasswordSerializer(serializers.Serializer):
+    new_password = serializers.RegexField(write_only=True,required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True)
+
+
+

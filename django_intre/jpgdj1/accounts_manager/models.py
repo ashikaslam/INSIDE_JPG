@@ -1,5 +1,5 @@
 # your_app/models.py
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 
@@ -18,15 +18,28 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, mobile_number, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-
+        
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-
+        
         return self.create_user(email, mobile_number, password, **extra_fields)
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+
+class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     mobile_number = models.CharField(max_length=15, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
@@ -39,6 +52,30 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['mobile_number']
+    
+    
+    
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.email
+    
+    class Meta:
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
+
+
+    
+
+
+# .........................
+
+
+
+class PasswordReset(models.Model):
+    email = models.EmailField()
+    token = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
