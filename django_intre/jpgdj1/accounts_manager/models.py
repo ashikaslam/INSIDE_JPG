@@ -74,6 +74,7 @@ class CustomUser(AbstractUser):
 # .........................
 
 
+from django.db import models
 
 class PasswordReset(models.Model):
     email = models.EmailField()

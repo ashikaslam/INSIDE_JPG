@@ -107,15 +107,14 @@ class PasswordChangeView(APIView):
 
 
 
-
-
-
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 
 from rest_framework import status
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+import os
 
 
 
@@ -134,8 +133,9 @@ class RequestPasswordReset(generics.GenericAPIView):
             reset = models.PasswordReset(email=email, token=token)
             reset.save()
 
-            # reset_url = f"{os.environ['PASSWORD_RESET_BASE_URL']}/{token}"
-            print(token,user)
+            #reset_url = f"{os.environ['PASSWORD_RESET_BASE_URL']}/{token}"
+            reset_url = f"http://127.0.0.1:8000/auth/reset-password/{token}/"
+            print(reset_url)
             # Sending reset link via email (commented out for clarity)
             # ... (email sending code)
 
@@ -146,12 +146,15 @@ class RequestPasswordReset(generics.GenericAPIView):
         
         
         
-    
+# 2nd
+
+
 class ResetPassword(generics.GenericAPIView):
     serializer_class = serializers.ResetPasswordSerializer
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request, token):
+        print(f"Received token: {token}")  # Debugging statement
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -160,21 +163,21 @@ class ResetPassword(generics.GenericAPIView):
         confirm_password = data['confirm_password']
         
         if new_password != confirm_password:
-            return Response({"error": "Passwords do not match"}, status=400)
+            return Response({"error": "Passwords do not match"}, status=status.HTTP_400_BAD_REQUEST)
         
         reset_obj = models.PasswordReset.objects.filter(token=token).first()
         
         if not reset_obj:
-            return Response({'error':'Invalid token'}, status=400)
+            return Response({'error':'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
         
-        user = User.objects.filter(email=reset_obj.email).first()
+        user = models.CustomUser.objects.filter(email=reset_obj.email).first()
         
         if user:
-            user.set_password(request.data['new_password'])
+            user.set_password(new_password)
             user.save()
             
             reset_obj.delete()
             
-            return Response({'success':'Password updated'})
-        else: 
-            return Response({'error':'No user found'}, status=404)
+            return Response({'success':'Password updated successfully'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error':'No user found'}, status=status.HTTP_404_NOT_FOUND)
