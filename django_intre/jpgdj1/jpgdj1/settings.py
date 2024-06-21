@@ -204,3 +204,24 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+
+# celary 
+
+# settings.py
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BEAT_SCHEDULE = {
+    'delete-expired-password-reset-tokens': {
+        'task': 'accounts_manager.tasks.delete_expired_password_reset_tokens',
+        'schedule': 600.0,  # Every 10 minutes
+    },
+}
+
+INSTALLED_APPS += [
+    'django_celery_beat',
+]
+
+

@@ -23,8 +23,21 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             first_name=validated_data.get('first_name', ''),
             last_name=validated_data.get('last_name', ''),
+            
         )
         return user
+
+        """
+        {
+  "email": "user@example.com",
+  "mobile_number": "+1234567890",
+  "first_name": "John",
+  "last_name": "Doe",
+  "password": "password123"
+}
+
+        
+        """
 
 
 
@@ -35,7 +48,15 @@ from rest_framework import serializers
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
     password = serializers.CharField(required=True, style={'input_type': 'password'})
-
+    """
+    
+    {
+  "username": "ashikaslam0000@gmail.com",
+  "password": "password123"
+}
+    
+    
+    """
 
 
 # passwrod change with current password

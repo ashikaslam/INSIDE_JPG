@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
 from .models import CustomUser
+from .import models
 
 # class UserAdmin(BaseUserAdmin):
 #     # The fields to be used in displaying the User model.
@@ -29,3 +30,5 @@ from .models import CustomUser
 
 #admin.site.register(CustomUser, UserAdmin)
 admin.site.register(CustomUser)
+admin.site.register(models.PasswordReset)
+admin.site.register(models.AccountActivation)

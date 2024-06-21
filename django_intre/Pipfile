@@ -9,6 +9,9 @@ djangorestframework = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = {extras = ["crypto"], version = "*"}
 django-rest-passwordreset = "*"
+celery = "*"
+django-celery-beat = "*"
+redis = "*"
 
 [dev-packages]
 
