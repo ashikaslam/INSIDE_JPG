@@ -1,0 +1,44 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>hello.....</h1>
+
+
+<script>
+
+
+    let socket = new WebSocket('ws://127.0.0.1:8000/');
+
+   // setup chat scoket
+    const chatSocket = new WebSocket(
+        'ws://127.0.0.1:8000/'
+    );
+
+    // on socket open
+    chatSocket.onopen = function (e) {
+        console.log('Chat socket successfully connected.');
+    };
+
+    // on socket close
+    chatSocket.onclose = function (e) {
+        console.log('Chat socket closed unexpectedly');
+    };
+
+
+    
+
+
+</script>
+
+
+</body>
+</html>
